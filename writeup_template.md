@@ -36,14 +36,9 @@ The goals / steps of this project are the following:
 
 ---
 ###Writeup / README
-
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
-
-You're reading it! and here is a link to my [project code](https://github.com/samrustan/Traffic-Sign-CNN
+Here is a link to my [project code](https://github.com/samrustan/Traffic-Sign-CNN
 
 ###Data Set Summary & Exploration
-
-####1. Provide a basic summary of the data set and identify where in your code the summary was done. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
 
 The code for this step is contained in the second and 3rd code cell of the IPython notebook.  
 
@@ -63,7 +58,7 @@ The code for this step is contained in the third code cell of the IPython notebo
 
 Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
 
-![alt text](https://github.com/samrustan/Traffic-Sign-CNN/distribution.png "data distribution")
+![alt text](https://github.com/samrustan/Traffic-Sign-CNN/distribution.png?raw=true)
 
 ###Design and Test a Model Architecture
 
