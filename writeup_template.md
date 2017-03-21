@@ -163,7 +163,7 @@ Well, they're high.  Though it's clear that doesn't mean much since in the next 
 
 Here are five German traffic signs that I found on the web:
 
-![test1][Traffic-Sign-CNN/test_signs_web/test1.jpg?raw=true] ![alt text][image5] ![alt text][image6] 
+![test1][/Traffic-Sign-CNN/test_signs_web/test1.jpg?raw=true] ![alt text][image5] ![alt text][image6] 
 ![alt text][image7] ![alt text][image8]
 
 1 of the 5 images were classified correctly, though it seemed to fail on a speed limit sign, which I would think should be an easy sign to classify.  Only one sign was classified correctly.  The top_k_preds.index shows the confidence for the one it got right to be 100%.  There was a "General Caution" image that was in the predicted set, however, it was the wrong image.  
