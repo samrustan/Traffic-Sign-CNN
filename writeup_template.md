@@ -30,7 +30,8 @@ The goals / steps of this project are the following:
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
 
 ## Rubric Points
-###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
+
+In the following headings, the [rubric points](https://review.udacity.com/#!/rubrics/481/view) will be addressed at each point in my implementation.  
 
 ---
 ### Github link
@@ -86,7 +87,7 @@ The model archictecture is the LeNet model straight from the Lab.  Max Pooling h
 
 To avoid overfitting, Dropout was applied on the feed-forward layers.  Dropout randomly zeroes out values and creates a probability that the activation will be passed forward.  By applying dropout, the network must confirm the values it produces repeatly to avoid generating noise.  Effectively, the network cannot rely on the "regularity" of the dataset.
 
-Also, L2 regularization and Cross Entropy on weights was applied to penalize large weight ("weight-gain") momentum shifts.  I used an L2_strength valie of 1e-4.  This was the largest value suggested by the Amazon AWS training parameters suggestion.
+Also, L2 regularization and Cross Entropy on weights was applied to penalize large weight ("weight-gain") momentum shifts.  I used an L2_strength value of 1e-4.  This was the largest value suggested by the Amazon AWS training parameters suggestion.
 
 http://docs.aws.amazon.com/machine-learning/latest/dg/training-parameters.html
 
@@ -112,6 +113,10 @@ My final model consisted of the following layers:
 | ReLu            |                                               |
 | Dropout         | keep probability: 50%                         |
 | Softmax         |                                               |
+
+2 convnet, Relu, max pool layers
+1 flatten
+3 Fully Connected, Relu, with Dropout.
  
 #### 4. Describe how, and identify where in your code, you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
@@ -126,28 +131,29 @@ To train the model, I used a training-validation-test solution.  I chose a relat
 
 The training examples are batched in sizes of 128 and fed to the model in a for loop.  Training accuracy is compared to validation accuracy and after 20 Epochs, the training accuracy reached 100% by the 20th Epoch and the validation acurracy was at 97%.  This gives me some pause as it seems too high for the low amount of epochs I used.  
 
-I plotted the 
+I plotted the result of the training and validation accuracy, as well as the training and validation loss.  The plot show the training accuracy approaching a steady state very quickly, though the trend is smooth without any jumps.  From the lectures this seems to be a good thing and gives some confidence in the model.  The validation plot is not as smooth, though trends in kind with the training set.
 
 #### 5. Describe the approach taken for finding a solution. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 The code for calculating the accuracy of the model is located in the ninth cell of the Ipython notebook.
 
 My final model results were:
-* training set accuracy of 100%
-* validation set accuracy of 97.0%
-* test set accuracy of 95.8%
+* Training Accuracy of 99.99%
+* Validation set accuracy of 96.96%
+* Test set accuracy of 95.48%
 
 If a well known architecture was chosen:
 
 * What architecture was chosen? 
 
-Simply due to it being the model in the lab. 
+The LeNet architecture from the lab was implemented.  
 
 * Why did you believe it would be relevant to the traffic sign application?
 
 Seemed a likely candidate from the suggestion by David Silver in the video...
 
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
+
 Well, they're high.  Though it's clear that doesn't mean much since in the next section where I tested on new images it seemed to fail pretty well.  
  
 
@@ -160,38 +166,40 @@ Here are five German traffic signs that I found on the web:
 ![alt text][image4] ![alt text][image5] ![alt text][image6] 
 ![alt text][image7] ![alt text][image8]
 
-2 of the 5 images were classified correctly, though it seemed to fail on a speed limit sign, which I would think should be an easy sign to classify.  40% classi
+1 of the 5 images were classified correctly, though it seemed to fail on a speed limit sign, which I would think should be an easy sign to classify.  Only one sign was classified correctly.  The top_k_preds.index shows the confidence for the one it got right to be 100%.  There was a "General Caution" image that was in the predicted set, however, it was the wrong image.  
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. Identify where in your code predictions were made. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
-The code for making predictions on my final model is located in the tenth cell of the Ipython notebook.
 
 Here are the results of the prediction:
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Image			              |     Prediction	     | Confidence | 
+|:---------------------:|:-------------------:|:----------:| 
+| Children crossing    	| General caution     |	  69.3%	   | 
+| General caution 		    | Priority road       |	  25.3%	   |
+| No entry				          | Priority road		     |	  43.4%	   |
+| Roundabout mandatory  | Roundabout mandatory|	  100%	    |
+| Speed limit (60km/h)  | Slippery Road       |   98.3%	   |
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The results are somewhat confusing, since there was only a single correct prediction that gave 100%, yet there was another predicton at 98% that was totally wrong.  The Speed limit sign seems like an fairly easy sign to classify too.
+
+The model was able to correctly guess 1 of the 5 traffic signs, which gives an accuracy of 20%. This doesn't compare at all to the test set accuracy of 95%.  Clearly, there's something that's either not correctly implemented or the test results are not indicative of the models success, indicating that there might be problems with the model itself.
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction and identify where in your code softmax probabilities were outputted. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+For the first image, the model is fairlt sure that this is a "General Caution" --which is incorrect, and it's only 3% sure that it is a Children's Crossing --which it IS!!  I'm very much confused by this result.
 
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| Probability  |     Prediction	        					| 
+|:------------:|:---------------------------:| 
+| 69%         	| General Caution   							   |  
+| 10%     				 | Roundabout Mandatory 							|
+|  5%					     | No Passing          								|
+|  3%	      			| Children Crossing		  		 				|
+|  2%				      | Dangerous Curve to the right|
 
 
-For the second image ... 
+### Conclusions:
+
+Overall this was a very challenging project for me as my programming skill and understanding of CNNs were fully taxed.  It's clear to me that my model is not working correctly and I'm not clear on where I should focus my efforts to improve the model.  I've tried several iterations of trainingm using upto 100 epochs and have found no consistent improvements in performance.  Since this is only the second project, I'm hoping to gain further insight on the next projects ahead.
