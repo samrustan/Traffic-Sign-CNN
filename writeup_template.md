@@ -1,9 +1,9 @@
-#**Traffic Sign Recognition** 
+# **Traffic Sign Recognition** 
 
-Samuel Rustan
-January Cohort
+## Write-up
 
-## Writeup Project 2, Traffic Sign Recognition
+#### Samuel Rustan
+#### February Cohort
 
 ---
 
@@ -33,24 +33,24 @@ The goals / steps of this project are the following:
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
 
 ---
-###Writeup / README
+### Github link
 Here is a link to my [project code](https://github.com/samrustan/Traffic-Sign-CNN
 
-###Data Set Summary & Exploration
+### Data Set Summary & Exploration
 
-The code for this step is contained in the second and 3rd code cell of the IPython notebook.  
+The code for this step is contained in the 2nd and 3rd code cell of the IPython notebook.  
 
-I used the pandas library to calculate summary statistics of the traffic
-signs data set:
+Python libraries: pandas, numpy, and matplotlib were used to plot a sample set of the training image set.
 
-Used pandas to read in the classification spreadsheet to identify the correct labels.
+A Histogram of the data was also plotted using a bar graph to show the distribution of the image set.  A histogram for the training, validation, and test set are displayed.
 
-* The size of training set is 34799 examples
-* The size of test set is 12630 examples
-* The shape of a traffic sign image is (32,32,3)
-* The number of unique classes/labels in the data set is 43
+* Number of training examples = 34799
+* Number of validation examples = 4410
+* Number of testing examples = 12630
+* Image data shape = (32, 32, 3)
+* Number of classes = 43
 
-####2. Include an exploratory visualization of the dataset and identify where the code is in your code file.
+#### 2. Include an exploratory visualization of the dataset and identify where the code is in your code file.
 
 The code for this step is contained in the third code cell of the IPython notebook.  
 
@@ -58,7 +58,7 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 
 ![alt text](https://github.com/samrustan/Traffic-Sign-CNN/distribution.png?raw=true)
 
-###Design and Test a Model Architecture
+### Design and Test a Model Architecture
 
 The code for this step is contained in the fifth code cell of the IPython notebook.
 
@@ -68,7 +68,7 @@ I ran a normalization on the set such that computationally this is more stable a
  
 In addition to normalization, I shuffled the data before running each EPOCH to distribute the probability that the model doesn't train on a specific pattern in the data.
 
-####2. Describe how, and identify where in your code, you set up training, validation and testing data. How much data was in each set? 
+#### 2. Describe how, and identify where in your code, you set up training, validation and testing data. How much data was in each set? 
 
 The training set contained 34799 examples.
 
@@ -80,7 +80,7 @@ Under Model Architecture is where I set the training BATCH_SIZE, EPOCHS, and LEA
 
 Due to time constraints I did not augment the data, though it is possible that augmenting the data by adding artificial shifts and rotations to teach the network how to recover from poor position or orientation does add undesirable artifacts as the magnitude increases. --Excerpted from Nvidia end-to-end paper.  This is something that I'm going to explore further.
 
-####3. Describe, and identify where in your code, what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) 
+#### 3. Describe, and identify where in your code, what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) 
 
 The model archictecture is the LeNet model straight from the Lab.  Max Pooling has been applied at the Convnet layers.
 
@@ -92,22 +92,28 @@ http://docs.aws.amazon.com/machine-learning/latest/dg/training-parameters.html
 
 My final model consisted of the following layers:
 
-| Layer         		|     Description	        			                 		| 
+| Layer           |     Description                               | 
 |:---------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							                   | 
-| Convolution 3x3 | 1x1 stride, VALID padding, outputs 32x32x64 	 |
-| RELU					       |											                                   	|
-| Max pooling	    | 2x2 stride, VALID padding, outputs 32x32x64 		|
-| Convolution 3x3 | 1x1 stride, VALID padding, outputs 32x32x64 	 |
-| RELU					       |											                                   	|
-| Max pooling	    | 2x2 stride, VALID padding, outputs 32x32x64 		|
-| Flattened      	|         								                             	|
-| Fully Connected / ReLu / Dropout
-| Fully Connected / ReLu / Dropout 
-| Fully Connected / ReLu / Dropout
-| Softmax				      
+| Input           | 32x32x3 RGB image                             | 
+| Convolution 3x3 | 1x1 stride, VALID padding, outputs 32x32x64   |
+| ReLu            |                                               |
+| Max pooling     | 2x2 stride, VALID padding, outputs 32x32x64   |
+| Convolution 3x3 | 1x1 stride, VALID padding, outputs 32x32x64   |
+| ReLu            |                                               |
+| Max pooling     | 2x2 stride, VALID padding, outputs 32x32x64   |
+| Flattened       |                                               |
+| Fully Connected | shape=(1600, 1024), mean = 0, stddev = 0.1    |
+| ReLu            |                                               |
+| Dropout         | keep probability: 50%                         |
+| Fully Connected | shape=(1024,512), mean = 0, stddev = 0.1      |
+| ReLu            |                                               |
+| Dropout         | keep probability: 50%                         |
+| Fully Connected | shape=(512, 43), mean = 0, stddev = 0.1       |
+| ReLu            |                                               |
+| Dropout         | keep probability: 50%                         |
+| Softmax         |                                               |
  
-####4. Describe how, and identify where in your code, you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+#### 4. Describe how, and identify where in your code, you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
 * EPOCHS = 20
 * BATCH_SIZE = 128
@@ -116,11 +122,13 @@ My final model consisted of the following layers:
 
 The code for training the model is located in the tenth cell of the ipython notebook. 
 
-To train the model, I used a training-validation-test solution.  I chose a relatively low number of epochs for a couple reasons, I wanted to know the least amount of training that would be required to train the model _and_ I had many issues with AWS EC2 service that I ended up using a MacBook CPU to run the training session.
+To train the model, I used a training-validation-test solution.  I chose a relatively low number of epochs for a couple reasons, I wanted to know the least amount of training that would be required to train the model.
 
 The training examples are batched in sizes of 128 and fed to the model in a for loop.  Training accuracy is compared to validation accuracy and after 20 Epochs, the training accuracy reached 100% by the 20th Epoch and the validation acurracy was at 97%.  This gives me some pause as it seems too high for the low amount of epochs I used.  
 
-####5. Describe the approach taken for finding a solution. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+I plotted the 
+
+#### 5. Describe the approach taken for finding a solution. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 The code for calculating the accuracy of the model is located in the ninth cell of the Ipython notebook.
 
@@ -130,17 +138,22 @@ My final model results were:
 * test set accuracy of 95.8%
 
 If a well known architecture was chosen:
+
 * What architecture was chosen? 
+
 Simply due to it being the model in the lab. 
+
 * Why did you believe it would be relevant to the traffic sign application?
+
 Seemed a likely candidate from the suggestion by David Silver in the video...
+
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
 Well, they're high.  Though it's clear that doesn't mean much since in the next section where I tested on new images it seemed to fail pretty well.  
  
 
-###Test a Model on New Images
+### Test a Model on New Images
 
-####1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+#### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
 Here are five German traffic signs that I found on the web:
 
@@ -149,7 +162,7 @@ Here are five German traffic signs that I found on the web:
 
 2 of the 5 images were classified correctly, though it seemed to fail on a speed limit sign, which I would think should be an easy sign to classify.  40% classi
 
-####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. Identify where in your code predictions were made. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+#### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. Identify where in your code predictions were made. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
 The code for making predictions on my final model is located in the tenth cell of the Ipython notebook.
 
@@ -166,7 +179,7 @@ Here are the results of the prediction:
 
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
 
-####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction and identify where in your code softmax probabilities were outputted. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
+#### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction and identify where in your code softmax probabilities were outputted. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
 The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
 
