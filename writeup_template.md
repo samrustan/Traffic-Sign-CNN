@@ -163,8 +163,14 @@ Well, they're high.  Though it's clear that doesn't mean much since in the next 
 
 Here are five German traffic signs that I found on the web:
 
-![test1][/Traffic-Sign-CNN/test_signs_web/test1.jpg?raw=true] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![child-cross][Traffic-Sign-CNN/test_signs_web/test1.jpg?raw=true] ![no-stopping][Traffic-Sign-CNN/test_signs_web/test2.jpg?raw=true] ![no-entry][Traffic-Sign-CNN/test_signs_web/test3.jpg?raw=true] 
+![round-mandatory][Traffic-Sign-CNN/test_signs_web/test4.jpg?raw=true] ![speed-60][Traffic-Sign-CNN/test_signs_web/test5.jpg]
+
+#### Qualites for classification (***added per review)
+
+The quality of the test images seems to be quite good.  There's only a small "getty images" watermark on them, which I wouldn't think would have much affect.  Lighting is good on all images and the shapes and colors are all clear.  I would expect a high classification prediction score for the images that are contained within the signnames file.  Test2 (no stopping) is not in the signnames.csv file and therefore will be interesting to see how it's classified.  Test3 (no-entry) is in the signnames file, but there is the addition of the "bikes allowed" that could possible throw-off the classification.  
+
+I would expect nearly 100% confidence for the "roundabout mandatory" and "speed limit 60" and a fairly high confidence for the "no entry" and "children's crossing" images based on the fact that these are unobstucted images with good lighting and clear geometry.
 
 1 of the 5 images were classified correctly, though it seemed to fail on a speed limit sign, which I would think should be an easy sign to classify.  Only one sign was classified correctly.  The top_k_preds.index shows the confidence for the one it got right to be 100%.  There was a "General Caution" image that was in the predicted set, however, it was the wrong image.  
 
