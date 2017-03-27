@@ -35,7 +35,7 @@ In the following headings, the [rubric points](https://review.udacity.com/#!/rub
 
 ---
 ### Github link
-Here is a link to my [project code](https://github.com/samrustan/Traffic-Sign-CNN
+Here is a link to my [project code](https://github.com/samrustan/Traffic-Sign-CNN)
 
 ### Data Set Summary & Exploration
 
